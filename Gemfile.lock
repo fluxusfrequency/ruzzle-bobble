@@ -1,0 +1,13 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    minitest (5.5.1)
+    ruby-processing (2.6.6)
+
+PLATFORMS
+  java
+  ruby
+
+DEPENDENCIES
+  minitest
+  ruby-processing
