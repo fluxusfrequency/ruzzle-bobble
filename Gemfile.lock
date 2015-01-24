@@ -2,7 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     minitest (5.5.1)
-    ruby-processing (2.6.6)
+    rake (10.4.2)
 
 PLATFORMS
   java
@@ -10,4 +10,4 @@ PLATFORMS
 
 DEPENDENCIES
   minitest
-  ruby-processing
+  rake

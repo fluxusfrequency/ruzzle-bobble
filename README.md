@@ -32,6 +32,8 @@ When you're done, make sure that the resulting app is located in
 
 #### JRuby Complete
 
+`gem install jruby-complete`
+
 `rp5 setup install`
 
 `rp5 setup check` to make sure everything worked

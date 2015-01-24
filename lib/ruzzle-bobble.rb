@@ -4,7 +4,8 @@ module RuzzleBobble; end
 
 class Interface < Processing::App
   def setup
-    size 640, 480
+    size 1280, 960
+    @controller = RuzzleBobble::GameController.new(app: self)
   end
 
   def draw
