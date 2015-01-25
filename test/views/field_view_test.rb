@@ -3,6 +3,7 @@ require "./lib/ruzzle-bobble/views/field-view.rb"
 
 class FieldViewTest < Minitest::Test
   def setup
+    @app = {}
     @view = RuzzleBobble::FieldView.new(app: @app)
   end
 

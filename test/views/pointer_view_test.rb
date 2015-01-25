@@ -3,6 +3,7 @@ require "./lib/ruzzle-bobble/views/pointer-view.rb"
 
 class PointerViewTest < Minitest::Test
   def setup
+    @app = {}
     @view = RuzzleBobble::PointerView.new(app: @app)
   end
 
