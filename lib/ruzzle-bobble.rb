@@ -4,12 +4,15 @@ module RuzzleBobble; end
 
 class Interface < Processing::App
   def setup
-    size 1280, 960
+    size 800, 800
     @game_controller = RuzzleBobble::GameController.new(app: self)
+    @pointer = load_image "arrow.png", "png"
+    p $app.find_method "image"
   end
 
   def draw
     game_controller.draw
+    image(@pointer, 0, 0)
   end
 
   private

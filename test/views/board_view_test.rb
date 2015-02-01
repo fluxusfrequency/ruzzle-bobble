@@ -14,7 +14,7 @@ class BoardViewTest < Minitest::Test
   def test_draw_board
     mock = Minitest::Mock.new
     view = RuzzleBobble::BoardView.new(app: mock)
-    mock.expect(:rect, true, [100, 100, 500, 300])
+    mock.expect(:rect, true, [100, 50, 500, 700])
     view.draw_board
     mock.verify
   end

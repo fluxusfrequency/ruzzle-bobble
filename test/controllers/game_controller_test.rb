@@ -11,7 +11,7 @@ class GameControllerTest < Minitest::Test
     assert_equal @app, @controller.app
   end
 
-  def test_draw
+  def test_draw_board
     mock = Minitest::Mock.new
     controller = RuzzleBobble::GameController.new({
       app: @app,
@@ -21,4 +21,16 @@ class GameControllerTest < Minitest::Test
     controller.draw
     mock.verify
   end
+
+  def test_draw_pointer
+    mock = Minitest::Mock.new
+    controller = RuzzleBobble::GameController.new({
+      app: @app,
+      pointer_view: mock
+    })
+    mock.expect(:draw_pointer, true)
+    controller.draw
+    mock.verify
+  end
+
 end
