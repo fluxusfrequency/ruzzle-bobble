@@ -2,6 +2,13 @@ require "ruby-processing"
 require "forwardable"
 
 class Bobble < Processing::App
+  COLORS = {
+    red: [150, 0, 0],
+    green: [40, 129, 40],
+    blue: [0, 0, 189],
+    yellow: [255, 255, 0]
+  }
+
   def setup
     size 800, 800
     background 11, 44, 33, 10
@@ -52,7 +59,7 @@ class Bobble < Processing::App
   def new_bubble
     @current_bubble = Bubble.new({
       app: self,
-      color: color(100, 129, 40),
+      color: color(*COLORS.sample[1]),
       x_coord: 400,
       y_coord: 650
     })
@@ -68,7 +75,6 @@ class Bobble < Processing::App
 
   def shoot_bubble
     if current_bubble_in_motion?
-      p "in motion"
       current_bubble.update_coordinates(0, -5)
     else
       bubbles << current_bubble
@@ -78,9 +84,12 @@ class Bobble < Processing::App
 
   def current_bubble_in_motion?
     if bubbles.empty?
-      current_bubble.y_coord > 75
+      current_bubble.y_coord > 75 &&
+        (current_bubble.x_coord > 225 &&
+         current_bubble.x_coord < 575)
     else
-      current_bubble.y_coord > bubbles.max_by(&:y_coord).y_coord + 50
+      current_bubble.y_coord > bubbles.max_by(&:y_coord).y_coord + 50 ||
+      current_bubble.x_coord > bubbles.max_by(&:x_coord).x_coord + 50
     end
   end
 
@@ -130,6 +139,13 @@ class Bubble
   private
 
   attr_reader :app, :color
+end
+
+class Hash
+  def sample
+    k = self.keys.sample
+    [k, self[k]]
+  end
 end
 
 Bobble.new
