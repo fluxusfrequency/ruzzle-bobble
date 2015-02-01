@@ -2,7 +2,7 @@ require "ruby-processing"
 require "forwardable"
 
 class Bobble < Processing::App
-  COLORS = {
+  BUBBLE_COLORS = {
     red: [150, 0, 0],
     green: [40, 129, 40],
     blue: [0, 0, 189],
@@ -12,7 +12,8 @@ class Bobble < Processing::App
   def setup
     size 800, 800
     background 11, 44, 33, 10
-    @offset = 1
+    @offset = 0
+    @rotation = 0
     new_bubble
   end
 
@@ -30,12 +31,13 @@ class Bobble < Processing::App
     when 32
       current_bubble.shoot
     when 37
-      @offset -= (Math::PI / 64)
+      @offset -= 1
+      @rotation -= Math::PI / 64
     when 38
       puts 'up'
     when 39
-      @offset += (Math::PI / 64)
-      puts 'right'
+      @offset += 1
+      @rotation += Math::PI / 64
     when 40
       puts 'down'
     end
@@ -53,13 +55,20 @@ class Bobble < Processing::App
   def draw_pointer
     strokeWeight 5
     stroke 255, 0, 0
-    line 400 * offset, 500, 400 * 1 / offset, 650
+    push_matrix
+    translate 400, 650
+    rotate @rotation
+    line 0,
+      -150,
+      0,
+      0
+    pop_matrix
   end
 
   def new_bubble
     @current_bubble = Bubble.new({
       app: self,
-      color: color(*COLORS.sample[1]),
+      color: color(*BUBBLE_COLORS.sample[1]),
       x_coord: 400,
       y_coord: 650
     })
@@ -75,7 +84,8 @@ class Bobble < Processing::App
 
   def shoot_bubble
     if current_bubble_in_motion?
-      current_bubble.update_coordinates(0, -5)
+      # 1/2 width of board * 1/64
+      current_bubble.update_coordinates(@offset, -5)
     else
       bubbles << current_bubble
       new_bubble
