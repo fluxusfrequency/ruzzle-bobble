@@ -14,6 +14,7 @@ class Bobble < Processing::App
     background 11, 44, 33, 10
     @offset = 0
     @rotation = 0
+    @bubble_rotation = 0
     new_bubble
   end
 
@@ -31,13 +32,13 @@ class Bobble < Processing::App
     when 32
       current_bubble.shoot
     when 37
-      @offset -= 1
       @rotation -= Math::PI / 64
+      @bubble_rotation -= Math::PI / 64
     when 38
       puts 'up'
     when 39
-      @offset += 1
       @rotation += Math::PI / 64
+      @bubble_rotation += Math::PI / 64
     when 40
       puts 'down'
     end
@@ -85,7 +86,7 @@ class Bobble < Processing::App
   def shoot_bubble
     if current_bubble_in_motion?
       # 1/2 width of board * 1/64
-      current_bubble.update_coordinates(@offset, -5)
+      current_bubble.update_coordinates(@bubble_rotation * 4, -5)
     else
       bubbles << current_bubble
       new_bubble
@@ -93,13 +94,21 @@ class Bobble < Processing::App
   end
 
   def current_bubble_in_motion?
+    if current_bubble.x_coord < 225 || current_bubble.x_coord > 575
+      @bubble_rotation *= -1
+      return true
+    end
     if bubbles.empty?
-      current_bubble.y_coord > 75 &&
+      return current_bubble.y_coord > 75 &&
         (current_bubble.x_coord > 225 &&
          current_bubble.x_coord < 575)
     else
+      if current_bubble.y_coord <= 75
+        return false
+      end
       current_bubble.y_coord > bubbles.max_by(&:y_coord).y_coord + 50 ||
-      current_bubble.x_coord > bubbles.max_by(&:x_coord).x_coord + 50
+      current_bubble.x_coord > bubbles.max_by(&:x_coord).x_coord + 50 ||
+      current_bubble.y_coord > 75
     end
   end
 
