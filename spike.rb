@@ -1,6 +1,8 @@
 require "ruby-processing"
 require "forwardable"
 
+# Board is [8, 7, 8, 7, 8, 7, 8, 7, 8, 7, 8] to start
+
 class Bobble < Processing::App
   BUBBLE_COLORS = {
     red: [150, 0, 0],
